@@ -156,7 +156,7 @@ h1:not(.site-title):before, h2:before{
 }
 
 .graph-outer{
-    width: 70%;
+    width: 62%;
     margin: 0 auto;
     padding-bottom: 2%;
     background-color: #fff;
@@ -166,8 +166,8 @@ h1:not(.site-title):before, h2:before{
 }
 
 #chartContainer{
-    height: 400px;
-    width: 95%;
+    height: 380px !important;
+    width: 848px !important;
     margin: 0 auto;
 }
 
@@ -221,7 +221,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .cryto-coin-title{
-    width: 70% !important;
+    width: 62% !important;
     margin: 0 auto;
 }
 

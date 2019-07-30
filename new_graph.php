@@ -122,7 +122,6 @@ var generate_graph = function(till, from, year=false,  all=false) {
       res.forEach(function(one){
         titles.push(one['label']);
         values.push(one['y']);
-        //console.log(values);
       });
 
 
@@ -273,7 +272,6 @@ var generate_graph = function(till, from, year=false,  all=false) {
                     //maxTicksLimit:4
                     callback: function(tick) {
                       if(chkweek){
-                        //alert(tick);
                         tick = '12AM';
                         return tick;
                       }
@@ -291,7 +289,6 @@ var generate_graph = function(till, from, year=false,  all=false) {
                             tick = tick.substring(5,11);
                             var pieces = tick.split(" ");
                             tick = pieces[1]+" "+pieces[0];
-                            //console.log(tick);
                             return tick;
                         }
                       }
@@ -316,12 +313,12 @@ var generate_graph = function(till, from, year=false,  all=false) {
             scaleLabel: {
                 display: false,
                 labelString: 'probability'
-            },
+            }
           }]
         },
       legend: {
             display: false
-        },
+        }
       
       }
 });

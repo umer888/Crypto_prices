@@ -5,8 +5,13 @@
 	if(!empty($settings[0]->coins_with_links)){
 	    $coins_array = implode(",",json_decode($settings[0]->coins_with_links));
 	}
-	
-    $generator = json_decode($settings[0]->coins_with_links);
+
+	if (!empty($settings[0]->coins_with_links)) {
+		$generator = json_decode($settings[0]->coins_with_links);
+	}
+
+	//$generator = json_decode($settings[0]->coins_with_links);
+    
     if (empty($generator)) {
     	$generator = array();
     }
@@ -66,7 +71,7 @@
         <p><?php _e("Active Language: " ); ?><select name="language" style="margin-left: 170px!important;"> 
 		                                            <option value="">Select Language</option>
 													<option value="english" <?php if(!empty($settings[0]->active_language) && $settings[0]->active_language == "english"){ echo "selected"; }?>>English</option>
-													<option value="norweign" <?php if(!empty($settings[0]->active_language) && $settings[0]->active_language == "norweign"){ echo "selected"; }?>>Norweign</option>
+													<option value="norweign" <?php if(!empty($settings[0]->active_language) && $settings[0]->active_language == "norweign"){ echo "selected"; }?>>Norwegian</option>
 													<option value="swedish" <?php if(!empty($settings[0]->active_language) && $settings[0]->active_language == "swedish"){ echo "selected"; }?>>Swedish</option>
 													<option value="danish" <?php if(!empty($settings[0]->active_language) && $settings[0]->active_language == "danish"){ echo "selected"; }?>>Danish</option>
 											</select>

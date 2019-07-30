@@ -389,7 +389,7 @@ register_activation_hook( __FILE__, 'table_for_setting' );
 	}else if($active_currency == "eur"){
         $currency_symbol = '€';
 	}
-	return	include('new_graph.php');
+	include('new_graph.php');
 	
  }
 
