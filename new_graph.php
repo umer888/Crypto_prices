@@ -350,8 +350,8 @@ function addCurrencySymbol(value) {
 
 //default graph
 window.onload = function () {
-    //chart.destroy();
-    //chkweek = false;
+    chkweek = false;
+    mnth = false;
    generate_graph(1,0,false,true);
 }
 //one week
@@ -360,7 +360,6 @@ jQuery("#week").click(function(){
     chkweek = true;
     mnth = false;
     checker = false;
-    //alert(chkweek);
     generate_graph(1,7);
 }); 
 //one month
@@ -369,7 +368,6 @@ jQuery("#month").click(function(){
     mnth = true;
     chkweek = false;
     checker = false;
-    //alert(chkweek);
     generate_graph(1,30);
 }); 
 //one year
@@ -419,38 +417,18 @@ var chkweek = false;
                 
                 if(year || all){
                     var date = new Date(prices[i][0]).toLocaleString();
-                    /*var epoch = prices[i][0];
-                    var d = new Date(epoch);
-                    date = d.getFullYear();*/
-                    //chart.
-                    //console.log(date);
                     checker = true;
                     mnth = false;
                     date = date.substring(0, 10);
-
-
-
-                    /*var res = date.split("/");
-                    res[2] = res[2].substring(0,4);
-                    console.log(res[2]);
-                    date = res[2];*/
                 }else{
                     checker = false;
                     mnth = true;
                     var date = new Date(prices[i][0]).toGMTString();
-                    
-                    //console.log(date);
-                    //date = date.substring(5, 12);
-                    
-                    /*var pieces = date.split(" ");
-                    date = pieces[1]+" "+pieces[0];*/
                 }
                 if (mnth) {
                   var pieces = date.split(" ");
                   if(date_checker != pieces[1]){
                         var saving_date = date.replace(/\s/g, '');
-                        //date = date.replace(/,/g, '');
-                        //console.log(date);
                         final_array[counter] = {label: date, y: prices[i][1]};
                         date_checker = pieces[1];
                         counter++;
@@ -460,7 +438,6 @@ var chkweek = false;
                   if(date_checker != date){
                         var saving_date = date.replace(/\s/g, '');
                         date = date.replace(/,/g, '');
-                        //console.log(date);
                         final_array[counter] = {label: date, y: prices[i][1]};
                         date_checker = date;
                         counter++;
