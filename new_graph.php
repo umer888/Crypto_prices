@@ -96,6 +96,7 @@ jQuery(document).ready(function() {
         jQuery(this).addClass('active');
     });
 
+var chart;
 
 var generate_graph = function(till, from, year=false,  all=false) {
         
@@ -119,16 +120,50 @@ var generate_graph = function(till, from, year=false,  all=false) {
     var titles = [];
     var values = [];
       res.forEach(function(one){
-        
         titles.push(one['label']);
-        values.push(one['y']);3
-    
+        values.push(one['y']);
+        //console.log(values);
       });
 
+
+
+
+
+
+
+      /*----For drawing line on the chart----*/
+    Chart.defaults.LineWithLine = Chart.defaults.line;
+    Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+    draw: function(ease) {
+    Chart.controllers.line.prototype.draw.call(this, ease);
+
+      if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+         var activePoint = this.chart.tooltip._active[0],
+             ctx = this.chart.ctx,
+             x = activePoint.tooltipPosition().x,
+             topY = this.chart.scales['y-axis-0'].top,
+             bottomY = this.chart.scales['y-axis-0'].bottom;
+
+         // draw line
+         ctx.save();
+         ctx.beginPath();
+         ctx.moveTo(x, topY);
+         ctx.lineTo(x, bottomY);
+         ctx.lineWidth = 1;
+         ctx.strokeStyle = '#07C';
+         ctx.stroke();
+         ctx.restore();
+      }
+   }
+});
+/*--------*/
+
+
     var ctx = document.getElementById('chartContainer').getContext('2d');
-    var chart = new Chart(ctx, {
+
+    chart = new Chart(ctx, {
     // The type of chart we want to create
-    type: 'line',
+    type: 'LineWithLine',
 
     // The data for our dataset
     data: {
@@ -137,15 +172,21 @@ var generate_graph = function(till, from, year=false,  all=false) {
             label: 'Price',
             backgroundColor: '#cce6ff',
             borderColor: '#0083ff',
+            
             data: values,
             pointRadius: 0,
-
-        }]
+            'borderWidth': '2',
+            'lineTension': '0.2'
+        }],
     },
 
     // Configuration options go here
     options: {
       tooltips: {
+            intersect: false,
+            mode: 'index',
+            displayColors: true,
+
             callbacks: {
                 label: function(tooltipItem, data) {
                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
@@ -155,37 +196,196 @@ var generate_graph = function(till, from, year=false,  all=false) {
                     }
                     label += Math.round(tooltipItem.yLabel * 100) / 100;
                     return label;
+                },
+
+                title: function(tooltipItem){
+                // `tooltipItem` is an object containing properties such as
+                // the dataset and the index of the current item
+
+                // Here, `this` is the char instance
+
+                // The following returns the full string
+
+                if (mnth) {
+                  var pieces = this._data.labels[tooltipItem[0].index].split(" ");
+                  switch(pieces[2]) {
+                    case 'Jan':
+                      pieces[2] = '01';
+                      break;
+                    case 'Feb':
+                      pieces[2] = '02';
+                      break;
+                    case 'Mar':
+                      pieces[2] = '03';
+                      break;
+                    case 'Apr':
+                      pieces[2] = '04';
+                      break;
+                    case 'May':
+                      pieces[2] = '05';
+                      break;
+                    case 'Jun':
+                      pieces[2] = '06';
+                      break;
+                    case 'Jul':
+                      pieces[2] = '07';
+                      break;
+                    case 'Aug':
+                      pieces[2] = '08';
+                      break;
+                    case 'Sep':
+                      pieces[2] = '09';
+                      break;
+                    case 'Oct':
+                      pieces[2] = '10';
+                      break;
+                    case 'Nov':
+                      pieces[2] = '11';
+                      break;
+                    case 'Dec':
+                      pieces[2] = '12';
+                      break;
+                    default:
+                      // code block
+                  }
+                  return pieces[2]+"/"+pieces[1]+"/"+pieces[3];
+                }
+                if(checker){
+                  return this._data.labels[tooltipItem[0].index];
+                }
+                
+                console.log(this._data.labels[tooltipItem[0].index]);
                 }
             }
         },
+        scales: {
+
+
+          xAxes: [{
+                gridLines: {
+                    display: false
+                },
+                ticks: {
+                    fontColor: '#9E9E9E',
+                    maxRotation: 0,
+                    autoSkipPadding: 110,
+                    //autoSkip: true,
+                    //maxTicksLimit:4
+                    callback: function(tick) {
+                      if(chkweek){
+                        //alert(tick);
+                        tick = '12AM';
+                        return tick;
+                      }
+                      if(checker){
+                        var characterLimit = 4;
+                        if (tick.length >= characterLimit) {
+                            tick = tick.substring(tick.length-5);
+                            tick = tick.replace(/\//g, '');
+                            return tick;
+                        }
+                      }
+                      if(mnth){
+                        var characterLimit = 6;
+                        if (tick.length >= characterLimit) {
+                            tick = tick.substring(5,11);
+                            var pieces = tick.split(" ");
+                            tick = pieces[1]+" "+pieces[0];
+                            //console.log(tick);
+                            return tick;
+                        }
+                      }
+                      
+                    return tick;
+                  }
+                }
+                //type: 'time'
+               
+
+            }],
+
+          yAxes: [{
+            
+            ticks: {
+                    fontColor: '#9E9E9E',
+                    callback: function(value, index, values) {
+                        return formatCurrencyAbbreviated(value);
+                    },
+                    padding: 5,
+            },
+            scaleLabel: {
+                display: false,
+                labelString: 'probability'
+            },
+          }]
+        },
       legend: {
             display: false
-        }
+        },
+      
       }
 });
 
 }
 
-//default graph
-/*window.onload = function () {
-   generate_graph(1,0,false,true);
-}*/
-//one week
-jQuery("#all").click(function(){
-    generate_graph(1,0,false,true);
-}); 
 
+
+
+
+function formatCurrencyAbbreviated(number) {
+    if (number < 1) {
+        return addCurrencySymbol(number.toPrecision(3));
+    } else {
+        return addCurrencySymbol(numeral(number).format('0.0a'));
+    }
+}
+
+function addCurrencySymbol(value) {
+    
+        return '' + value;
+    
+}
+
+
+
+//default graph
+window.onload = function () {
+    //chart.destroy();
+    //chkweek = false;
+   generate_graph(1,0,false,true);
+}
 //one week
 jQuery("#week").click(function(){
+    chart.destroy();
+    chkweek = true;
+    mnth = false;
+    checker = false;
+    //alert(chkweek);
     generate_graph(1,7);
 }); 
 //one month
 jQuery("#month").click(function(){
+    chart.destroy();
+    mnth = true;
+    chkweek = false;
+    checker = false;
+    //alert(chkweek);
     generate_graph(1,30);
 }); 
 //one year
 jQuery("#year").click(function(){
+    chart.destroy();
+    checker = true;
+    mnth = false;
+    chkweek = false;
     generate_graph(1,360,true);
+}); 
+
+jQuery("#all").click(function(){
+    chart.destroy();
+    chkweek = false;
+    mnth = false;
+    generate_graph(1,0,false,true);
 }); 
 
 
@@ -198,10 +398,12 @@ var get_epoch_with_difference = function(date, duration) {
         return myEpoch;
  }
 
+var checker = false;
+var mnth = false;
+var chkweek = false;
 
  var get_api_records = function(coin,market,start,end,year=false,all=false) {
     
-    alert("yes");
         var date_checker;
         var final_array = [];
         var counter = 0;
@@ -214,20 +416,59 @@ var get_epoch_with_difference = function(date, duration) {
                var prices =  response.prices;
 
                for(var i = 0; i< prices.length; i++){
-
+                
                 if(year || all){
                     var date = new Date(prices[i][0]).toLocaleString();
+                    /*var epoch = prices[i][0];
+                    var d = new Date(epoch);
+                    date = d.getFullYear();*/
+                    //chart.
+                    //console.log(date);
+                    checker = true;
+                    mnth = false;
                     date = date.substring(0, 10);
+
+
+
+                    /*var res = date.split("/");
+                    res[2] = res[2].substring(0,4);
+                    console.log(res[2]);
+                    date = res[2];*/
                 }else{
+                    checker = false;
+                    mnth = true;
                     var date = new Date(prices[i][0]).toGMTString();
-                    date = date.substring(5, 12);
+                    
+                    //console.log(date);
+                    //date = date.substring(5, 12);
+                    
+                    /*var pieces = date.split(" ");
+                    date = pieces[1]+" "+pieces[0];*/
                 }
-                    if(date_checker != date){
+                if (mnth) {
+                  var pieces = date.split(" ");
+                  if(date_checker != pieces[1]){
                         var saving_date = date.replace(/\s/g, '');
-                        final_array[counter] = {label: saving_date, y: prices[i][1]};
+                        //date = date.replace(/,/g, '');
+                        //console.log(date);
+                        final_array[counter] = {label: date, y: prices[i][1]};
+                        date_checker = pieces[1];
+                        counter++;
+                    }
+                }
+                if (checker) {
+                  if(date_checker != date){
+                        var saving_date = date.replace(/\s/g, '');
+                        date = date.replace(/,/g, '');
+                        //console.log(date);
+                        final_array[counter] = {label: date, y: prices[i][1]};
                         date_checker = date;
                         counter++;
                     }
+                }
+
+
+                    
                 }
             }
         });

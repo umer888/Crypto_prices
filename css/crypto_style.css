@@ -1,3 +1,30 @@
+@media only screen  
+  and (max-device-width: 768px) {
+    .values{
+    width: 100% !important;
+}
+  }
+.values{
+    float: right; 
+    width: 50%;
+}
+.top-headings{
+    font-family: "GothamRounded Light",Sans-serif !important;
+    margin-bottom: 0px;
+    color: #333;
+}
+.small-headings{
+  font-family: "GothamRounded Light",Sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 20px;
+  letter-spacing: 0.48px;
+  text-align: left;
+  color: #c0c0c0;
+  margin-top: 0px;
+}
 .list-hundred-container{
     background-color: #f9fafc;
     padding-bottom: 90px;

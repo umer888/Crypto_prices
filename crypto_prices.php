@@ -148,18 +148,28 @@ register_activation_hook( __FILE__, 'table_for_setting' );
 	if($active_language == "english"){
 		$headings = $settings_data[0]->headings_english;
 		$headings = str_replace("MarketCap","Market<br/>Cap",$headings);
+		$headings = str_replace("24h Change","24h<br/>Change",$headings);
+		$headings = str_replace("24h volume","24h<br/>volume",$headings);
 	}else if($active_language == "norweign"){
 		$headings = $settings_data[0]->headings_norweign;
 		$headings = str_replace("markedLokk","marked<br/>Lokk",$headings);
+		
+		$headings = str_replace("Endring 24t","24t<br/>Endring",$headings);
+		$headings = str_replace("Volum 24t","24t<br/>Volum",$headings);
 	}else if($active_language == "swedish"){
 		$headings = $settings_data[0]->headings_swedish;
 		$headings = str_replace("MarknadsföraKeps","Marknadsfor<br/>aKeps",$headings);
+		$headings = str_replace("Förändring 24h","24h<br/>Förändring",$headings);
+		$headings = str_replace("Volym 24h","24h<br/>Volym",$headings);
 	}else if($active_language == "danish"){
 		$headings = $settings_data[0]->headings_danish;
 		$headings = str_replace("MarkedKasket","Marked<br/>Kasket",$headings);
+		$headings = str_replace("Ændring 24t","24t<br/>Ændring",$headings);
+		$headings = str_replace("Volumen 24t","24t<br/>Volumen",$headings);
 	}
 
-	$headings = str_replace("24h","24h<br/>",$headings);
+	
+	
 	
 
 	$headings = json_decode($headings);
@@ -176,12 +186,105 @@ register_activation_hook( __FILE__, 'table_for_setting' );
 	$coins = json_decode($json, true);
 	$chart_array= array(1,279,44,2,780,738,825,6799,325,975,1094,100,8418,69,19,1481,877,480,692,2822,973,3447,453,242,486,4463,7310,1364,1043,684,1167,5,677,6319,4703,776,7492,329,3348,7595,1087,385,1085,3449,3412,1254,316,2170,425,611,863,92,756,95,309,5795,6013,99,2523,1060,2687,1091,63,4755,1086,1048,1089,289,203,2538,525,398,1152,1102,1371,80,779,739,3370,542,479,1442,531,3139,878,3246,3849,1372,2431,4380,4643,1053,1768,691,7340,1107,5003,613,2780,3695,6425);
 
+	//getting data for update at
+	$urll = 'https://api.coingecko.com/api/v3/global';
+	$resuestt = new WP_Http;
+	$resultt = $resuestt->request($urll);
+	$jsonn = $resultt['body'];
+	$dat = json_decode($jsonn, true);
+	$epoch = $dat['data']['updated_at'];
+	$dt = new DateTime("@$epoch");  // convert UNIX timestamp to PHP DateTime
+	$time = strtotime($dt->format('Y-m-d H:i:s'));
+
+	///////////////////////////////////
+
+	function humanTiming ($time)
+	{
+
+    	$time = time() - $time; // to get the time since that moment
+    	$time = ($time<1)? 1 : $time;
+    	$tokens = array (
+        	31536000 => 'year',
+        	2592000 => 'month',
+        	604800 => 'week',
+        	86400 => 'day',
+        	3600 => 'hour',
+        	60 => 'minute',
+        	1 => 'second'
+    	);
+
+    	foreach ($tokens as $unit => $text) {
+        	if ($time < $unit) continue;
+        	$numberOfUnits = floor($time / $unit);
+        	return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+    	}
+	}
+
+	///////////////////////////////////
+
+
+	$get_active_market_currency = $wpdb->get_results("SELECT active_currency,active_language FROM ".$wpdb->prefix."crypto_prices_setting");
+	if ($get_active_market_currency[0]->active_currency == 'usd') {
+		$symbol = '$';
+    	$mktcap   = $dat['data']['total_market_cap']['usd'];
+    	$tlvolume = $dat['data']['total_volume']['usd'];
+    	$dominance = $dat['data']['market_cap_percentage']['btc'];
+    }elseif($get_active_market_currency[0]->active_currency == 'eur'){
+    	$symbol = '€';
+    	$mktcap = $dat['data']['total_market_cap']['eur'];
+    	$tlvolume = $dat['data']['total_volume']['eur'];
+    	$dominance = $dat['data']['market_cap_percentage']['btc'];
+    }elseif($get_active_market_currency[0]->active_currency == 'nok'){
+    	$symbol = 'kr';
+    	$mktcap = $dat['data']['total_market_cap']['nok'];
+    	$tlvolume = $dat['data']['total_volume']['nok'];
+    	$dominance = $dat['data']['market_cap_percentage']['btc'];
+    }
+
+    if ($get_active_market_currency[0]->active_language == 'english') {
+    	$m = 'Market Cap';
+    	$v = '24h volume';
+    	$d = 'BTC dominance';
+    }elseif ($get_active_market_currency[0]->active_language == 'norweign') {
+    	$m = 'Markedsverdi';
+    	$v = 'Volum 24t';
+    	$d = 'BTC-dominanse';
+    }elseif ($get_active_market_currency[0]->active_language == 'swedish') {
+    	$m = 'Börsvärde';
+    	$v = 'Volym 24h';
+    	$d = 'BTC-dominans';
+    }elseif ($get_active_market_currency[0]->active_language == 'danish') {
+    	$m = 'Markedsværdi';
+    	$v = 'Volumen 24t';
+    	$d = 'BTC-dominans';
+    }
+    
 
     $output = '';
    //building output
-    $output .= "<div class='full-width-crypto list-hundred-container'>";
+    $output .= "<div class='full-width-crypto list-hundred-container' style='padding-top: 40px;'>";
 
-    $output .= "<div class='full-width-crypto upper-crypto-calculations'>";
+    $output .= "<div class='full-width-crypto upper-crypto-calculations' style='margin: 0 auto; max-width: 90% !important;'>";
+
+
+    $output .= 	'<div style="display: inline;"><div style="float:left"><h4 class="top-headings">Top 100 Cryptourrency Prices</h4>
+    				<p class="small-headings">Updated '.humanTiming($time).' ago</p></div>
+    				<div class="values">
+    					<div style="float: left; width: 33%;">
+    						<h4 class="top-headings" style="text-align: center; font-weight: normal;">'.$symbol.nice_number($mktcap).'</h4>
+    						<h6 class="small-headings" style="text-align: center;">'.$m.'</h6>
+    					</div>
+    					<div style="float: left; width: 33%;">
+    						<h4 class="top-headings" style="text-align: center; font-weight: normal;">'.$symbol.nice_number($tlvolume).'</h4>
+    						<h6 class="small-headings" style="text-align: center;">'.$v.'</h6>
+    					</div>
+    					<div style="float: left; width: 33%;">
+    						<h4 class="top-headings" style="text-align: center; font-weight: normal;">'.nice_number($dominance).'%</h4>
+    						<h6 class="small-headings" style="text-align: center;">'.$d.'</h6>
+    					</div>
+    				</div>
+    			</div>';
+
 
     $output .= "</div>";
 

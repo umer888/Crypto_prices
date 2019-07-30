@@ -5,9 +5,9 @@
 	if(!empty($settings[0]->coins_with_links)){
 	    $coins_array = implode(",",json_decode($settings[0]->coins_with_links));
 	}
-
+	
     $generator = json_decode($settings[0]->coins_with_links);
-    if(empty($generator)){
+    if (empty($generator)) {
     	$generator = array();
     }
 
@@ -112,7 +112,6 @@ jQuery(document).ready(function(){
 
 		    var coins_array = [];
 		    var counter = 2;
-
 		    <?php for($i = 0; $i < count($generator); $i++){?>
 		           coins_array[<?php echo $i;?>] = "<?php echo $generator[$i];?>";
 		     <?php } ?>
