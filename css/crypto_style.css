@@ -166,8 +166,9 @@ h1:not(.site-title):before, h2:before{
     padding-bottom: 2%;
     background-color: #fff;
     background-clip: border-box;
-    border: 1px solid rgba(0,0,0,.125);
+    /*border: 1px solid rgba(0,0,0,.125);*/
     border-radius: .25rem;
+    box-shadow: 0px 10px 25px 7px rgba(49, 121, 255, 0.05);
 }
 
 #chartContainer{
@@ -192,13 +193,13 @@ h1:not(.site-title):before, h2:before{
 }
 
 .range-outer ul li{
-    margin-left: 1%;
+    margin-left: 2%;
     cursor:pointer;
 }
 
 .range-buttons > .active{
     color: #007bff !important;
-    text-decoration: underline !important;
+    
   }
 
 .canvasjs-chart-credit{
@@ -209,6 +210,10 @@ h1:not(.site-title):before, h2:before{
     float: left;
     width: 15%;
     margin-left: 1%;
+}
+
+.crypto-block span{
+    font-weight: bold;
 }
 
 .upper-stats{

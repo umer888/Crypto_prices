@@ -19,7 +19,7 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
         <img src="<?php echo $coin_status['image']['small']; ?>" width="80%" style="margin-top: 34%;">
       </div>
         <h2><?php echo $coin_status['name']; ?> Price</h2>
-        <div class="h4 text-muted" style="text-transform: uppercase; margin-left: 1%;">   ( <?php echo $coin_status['symbol']; ?> )</div>
+        <h2 class="text-muted" style="text-transform: uppercase; margin-left: 1%;">   ( <?php echo $coin_status['symbol']; ?> )</h2>
     </div>
     
   </div>
@@ -41,7 +41,7 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
             <div class="crypto-block" style="padding-left">
                  <div class="text-muted small"><?php echo $graph_headings[1]; ?></div>
                  <div>
-                    <div class="my-auto h4 " style="<?php if($one_hour_change > 0){ echo "color:#28a745"; }else{ echo "color:#dc3545"; } ?>">
+                    <div class="my-auto h4 " style="<?php if($one_hour_change > 0){ echo "color:#35bc9d;"; }else{ echo "color:#f17777;"; } ?>">
                         <span><?php echo round($one_hour_change,2)."%";?></span>
                     </div>
                   </div>
@@ -49,7 +49,7 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
             <div class="crypto-block">
                  <div class="text-muted small"><?php echo $graph_headings[2]; ?></div>
                  <div>
-                    <div class="my-auto h4 " style="<?php if($one_day_change > 0){ echo "color:#28a745"; }else{ echo "color:#dc3545"; } ?>">
+                    <div class="my-auto h4 " style="<?php if($one_day_change > 0){ echo "color:#35bc9d;"; }else{ echo "color:#f17777;"; } ?>">
                         <span><?php echo round($one_day_change,2)."%";?></span>
                     </div>
                   </div>
@@ -57,7 +57,7 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
             <div class="crypto-block">
                  <div class="text-muted small" style="/* height: 25px; */"><?php echo $graph_headings[3]; ?></div>
                  <div>
-                    <div class="my-auto h4 "  style="<?php if($one_week_change > 0){ echo "color:#28a745"; }else{ echo "color:#dc3545"; } ?>">
+                    <div class="my-auto h4 "  style="<?php if($one_week_change > 0){ echo "color:#35bc9d;"; }else{ echo "color:#f17777;"; } ?>">
                         <span><?php echo round($one_week_change,2)."%";?></span>
                     </div>
                   </div>
@@ -91,8 +91,8 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
             <ul class="range-buttons">
                 <li id="week">1W</li>
                 <li id="month">1M</li>
-                <li id="year">1Y</li>
-                <li id="all" class="active">All</li>
+                <li id="year" class="active">1Y</li>
+                <li id="all">All</li>
             <ul>
 
         </div>
@@ -361,7 +361,7 @@ function addCurrencySymbol(value) {
 window.onload = function () {
     chkweek = false;
     mnth = false;
-   generate_graph(1,0,false,true);
+   generate_graph(1,360,true);
 }
 //one week
 jQuery("#week").click(function(){

@@ -352,9 +352,10 @@ register_activation_hook( __FILE__, 'table_for_setting' );
 
                       }else{
 
-                        $price = number_format( $coin['current_price'], 2 ).'<span > '.$currency_symbol.' </span>';
+                        $price = number_format( $coin['current_price'], 2 ,","," ").'<span > '.$currency_symbol.' </span>';
                         $market_cap = nice_number( $coin['market_cap'], 2 ).'<span > '.$currency_symbol.' </span>';
                         $totalvol = nice_number( $coin['total_volume'], 2 ).'<span > '.$currency_symbol.' </span>';
+                        //echo $coin['current_price'];
                       }
 				
 			$output .=	"</a>";
