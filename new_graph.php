@@ -16,7 +16,7 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
     
     <div class="d-flex flex-wrap align-items-baseline taitle">
       <div class="crypto-thumb my-auto mr-3">
-        <img src="<?php echo $coin_status['image']['small']; ?>" width="80%" style="margin-top: 34%;">
+        <img src="<?php echo $coin_status['image']['small']; ?>" width="80%" style="margin-top: 20%;">
       </div>
         <h2><?php echo $coin_status['name']; ?> Price</h2>
         <h2 class="text-muted" style="text-transform: uppercase; margin-left: 1%;">   ( <?php echo $coin_status['symbol']; ?> )</h2>
@@ -175,7 +175,7 @@ var generate_graph = function(till, from, year=false,  all=false) {
     chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'LineWithLine',
-
+     
     // The data for our dataset
     data: {
         labels: titles,
@@ -193,7 +193,10 @@ var generate_graph = function(till, from, year=false,  all=false) {
 
     // Configuration options go here
     options: {
+    	
       tooltips: {
+      	    titleFontSize: 18,
+    bodyFontSize: 18,
             intersect: false,
             mode: 'index',
             displayColors: true,
@@ -277,7 +280,8 @@ var generate_graph = function(till, from, year=false,  all=false) {
                     display: false
                 },
                 ticks: {
-                    fontColor: '#9E9E9E',
+                    fontColor: '#111',
+                    fontSize: 16,
                     maxRotation: 0,
                     autoSkipPadding: 110,
                     //autoSkip: true,
@@ -316,7 +320,8 @@ var generate_graph = function(till, from, year=false,  all=false) {
           yAxes: [{
             
             ticks: {
-                    fontColor: '#9E9E9E',
+                    fontColor: '#111',
+                    fontSize: 16,
                     callback: function(value, index, values) {
                         return formatCurrencyAbbreviated(value);
                     },

@@ -9,12 +9,12 @@
     width: 50%;
 }
 .top-headings{
-    font-family: "GothamRounded Light",Sans-serif !important;
-    margin-bottom: 0px;
+    font-family: "Gotham" !important;
+    margin-bottom: 0px !important;
     color: #333;
 }
 .small-headings{
-  font-family: "GothamRounded Light",Sans-serif;
+  font-family: "Gotham",Sans-serif;
   font-size: 17px;
   font-weight: 500;
   font-style: normal;
@@ -35,7 +35,7 @@ table{
 }
 
 .upper-crypto-calculations{
-
+font-family: "Gotham"!important;
 }
 
 .list-hundred{
@@ -77,7 +77,7 @@ table{
 }
 
 .small, small {
-    font-size: 80%;
+    font-size: 85%;
     font-weight: 400;
 }
 
@@ -220,6 +220,7 @@ h1:not(.site-title):before, h2:before{
     height: 100px;
     text-align: center;
     padding: 1em 0 1em 0;
+    font-family: "Gotham"!important;
 }
 
 .h4, h4 {
@@ -247,8 +248,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .taitle h2{
   
-  font-weight: 400;
+    font-weight: 400;
    }
+
 .currencysymbol{
-font-size: 48%;
+    font-size: 48%;
+}
+
+.d-flex h2{
+    margin-bottom: 0px !important;
 }
