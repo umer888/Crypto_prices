@@ -245,18 +245,22 @@ register_activation_hook( __FILE__, 'table_for_setting' );
     	$m = 'Market Cap';
     	$v = '24h volume';
     	$d = 'BTC dominance';
+    	$top = 'Top 100 Cryptocurrency Prices';
     }elseif ($get_active_market_currency[0]->active_language == 'norweign') {
     	$m = 'Markedsverdi';
     	$v = 'Volum 24t';
     	$d = 'BTC-dominanse';
+    	$top = 'Prisoversikt topp 100 kryptovaluta';
     }elseif ($get_active_market_currency[0]->active_language == 'swedish') {
     	$m = 'Börsvärde';
     	$v = 'Volym 24h';
     	$d = 'BTC-dominans';
+    	$top = 'Kurslista topp 100 kryptovalutor';
     }elseif ($get_active_market_currency[0]->active_language == 'danish') {
     	$m = 'Markedsværdi';
     	$v = 'Volumen 24t';
     	$d = 'BTC-dominans';
+    	$top = 'Prisoversigt: Top 100 kryptovaluta';
     }
     
 
@@ -267,7 +271,7 @@ register_activation_hook( __FILE__, 'table_for_setting' );
     $output .= "<div class='full-width-crypto upper-crypto-calculations' style='margin: 0 auto; max-width: 90% !important;'>";
 
 
-    $output .= 	'<div style="display: inline;"><div style="float:left"><h4 class="top-headings">Top 100 Cryptourrency Prices</h4>
+    $output .= 	'<div style="display: inline;"><div style="float:left"><h4 class="top-headings">'.$top.'</h4>
     				<p class="small-headings">Updated '.humanTiming($time).' ago</p></div>
     				<div class="values">
     					<div style="float: left; width: 33%;">
