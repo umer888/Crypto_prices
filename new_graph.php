@@ -18,8 +18,8 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
       <div class="crypto-thumb my-auto mr-3">
         <img src="<?php echo $coin_status['image']['small']; ?>" width="80%" style="margin-top: 34%;">
       </div>
-        <h2><?php echo $coin_status['name']; ?> Price</h2>
-        <div class="h4 text-muted" style="text-transform: uppercase; margin-left: 1%;">   ( <?php echo $coin_status['symbol']; ?> )</div>
+        <h2 class="coin-heading"><?php echo $coin_status['name']; ?> Price</h2>
+        <div class="abbr h4 text-muted" style="text-transform: uppercase; margin-left: 1%;">   ( <?php echo $coin_status['symbol']; ?> )</div>
     </div>
     
   </div>

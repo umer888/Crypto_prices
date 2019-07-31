@@ -10,7 +10,7 @@
 }
 .top-headings{
     font-family: "GothamRounded Light",Sans-serif !important;
-    margin-bottom: 0px;
+    margin-bottom: 0px !important;
     color: #333;
 }
 .small-headings{
@@ -167,7 +167,7 @@ h1:not(.site-title):before, h2:before{
 
 #chartContainer{
     height: 380px !important;
-    width: 848px !important;
+    width: 100% !important;
     margin: 0 auto;
 }
 
@@ -220,7 +220,23 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     line-height: 1.5;
 }
 
+.crypto-thumb img{
+    margin: 0px !important;
+}
+
+.coin-heading{
+    margin-top: auto;
+    line-height: 42px;
+    margin-bottom: auto;
+}
+
+.abbr{
+    margin-top: auto;
+    /*margin-bottom: 0px;*/
+}
+
 .cryto-coin-title{
+    padding-top: 2%;
     width: 62% !important;
     margin: 0 auto;
 }
@@ -231,6 +247,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .taitle{
+    padding-top: 5%;
     margin-bottom: 5%;
 }
 
