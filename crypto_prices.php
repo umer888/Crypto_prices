@@ -138,34 +138,23 @@ register_activation_hook( __FILE__, 'table_for_setting' );
 	if($active_currency == "usd"){
 		$currency_symbol = '$';
 	}else if($active_currency == "nok"){
-        $currency_symbol = 'kr';
-	}else if($active_currency == "eur"){
-        $currency_symbol = '€';
+        $currency_symbol = 'NOK';
+	}else if($active_currency == "dkk"){
+        $currency_symbol = 'DKK';
+	}else if($active_currency == "sek"){
+        $currency_symbol = 'SEK';
 	}
 
 
 	 $active_language = $settings_data[0]->active_language;
 	if($active_language == "english"){
 		$headings = $settings_data[0]->headings_english;
-		$headings = str_replace("MarketCap","Market<br/>Cap",$headings);
-		$headings = str_replace("24h Change","24h<br/>Change",$headings);
-		$headings = str_replace("24h volume","24h<br/>volume",$headings);
 	}else if($active_language == "norweign"){
 		$headings = $settings_data[0]->headings_norweign;
-		$headings = str_replace("markedLokk","marked<br/>Lokk",$headings);
-		
-		$headings = str_replace("Endring 24t","24t<br/>Endring",$headings);
-		$headings = str_replace("Volum 24t","24t<br/>Volum",$headings);
 	}else if($active_language == "swedish"){
 		$headings = $settings_data[0]->headings_swedish;
-		$headings = str_replace("MarknadsföraKeps","Marknadsfor<br/>aKeps",$headings);
-		$headings = str_replace("Förändring 24h","24h<br/>Förändring",$headings);
-		$headings = str_replace("Volym 24h","24h<br/>Volym",$headings);
 	}else if($active_language == "danish"){
 		$headings = $settings_data[0]->headings_danish;
-		$headings = str_replace("MarkedKasket","Marked<br/>Kasket",$headings);
-		$headings = str_replace("Ændring 24t","24t<br/>Ændring",$headings);
-		$headings = str_replace("Volumen 24t","24t<br/>Volumen",$headings);
 	}
 
 	
@@ -235,11 +224,23 @@ register_activation_hook( __FILE__, 'table_for_setting' );
     	$tlvolume = $dat['data']['total_volume']['eur'];
     	$dominance = $dat['data']['market_cap_percentage']['btc'];
     }elseif($get_active_market_currency[0]->active_currency == 'nok'){
-    	$symbol = 'kr';
+    	$symbol = 'NOK';
     	$mktcap = $dat['data']['total_market_cap']['nok'];
     	$tlvolume = $dat['data']['total_volume']['nok'];
     	$dominance = $dat['data']['market_cap_percentage']['btc'];
+    }elseif($get_active_market_currency[0]->active_currency == 'dkk'){
+    	$symbol = 'DKK';
+    	$mktcap = $dat['data']['total_market_cap']['dkk'];
+    	$tlvolume = $dat['data']['total_volume']['dkk'];
+    	$dominance = $dat['data']['market_cap_percentage']['btc'];
+    }elseif($get_active_market_currency[0]->active_currency == 'sek'){
+    	$symbol = 'SEK';
+    	$mktcap = $dat['data']['total_market_cap']['sek'];
+    	$tlvolume = $dat['data']['total_volume']['sek'];
+    	$dominance = $dat['data']['market_cap_percentage']['btc'];
     }
+
+
 
     if ($get_active_market_currency[0]->active_language == 'english') {
     	$m = 'Market Cap';
@@ -263,6 +264,18 @@ register_activation_hook( __FILE__, 'table_for_setting' );
     	$top = 'Prisoversigt: Top 100 kryptovaluta';
     }
     
+      if($currency_symbol == "$"){
+
+                      
+                        $mktcap = $symbol.nice_number($mktcap);
+                        $tlvolume = $symbol.nice_number($tlvolume);
+
+                      }else{
+
+                        $mktcap = nice_number($mktcap)." ".$symbol;
+                        $tlvolume = nice_number($tlvolume)." ".$symbol;
+                      }
+
 
     $output = '';
    //building output
@@ -275,11 +288,11 @@ register_activation_hook( __FILE__, 'table_for_setting' );
     				<p class="small-headings">Updated '.humanTiming($time).' ago</p></div>
     				<div class="values">
     					<div style="float: left; width: 33%;">
-    						<h4 class="top-headings" style="text-align: center; font-weight: normal;">'.$symbol.nice_number($mktcap).'</h4>
+    						<h4 class="top-headings" style="text-align: center; font-weight: normal;">'.$mktcap.'</h4>
     						<h6 class="small-headings" style="text-align: center;">'.$m.'</h6>
     					</div>
     					<div style="float: left; width: 33%;">
-    						<h4 class="top-headings" style="text-align: center; font-weight: normal;">'.$symbol.nice_number($tlvolume).'</h4>
+    						<h4 class="top-headings" style="text-align: center; font-weight: normal;">'.$tlvolume.'</h4>
     						<h6 class="small-headings" style="text-align: center;">'.$v.'</h6>
     					</div>
     					<div style="float: left; width: 33%;">
@@ -330,16 +343,34 @@ register_activation_hook( __FILE__, 'table_for_setting' );
 			            <h2 class='h0 underline-on-hover ".$class."'>".$coin['symbol']."</h2>
 		             	<div class='small text-muted no-underline' style='margin-bottom: 9px;'>".$coin['name']."</div>
 						</div>";
+
+				      if($currency_symbol == "$"){
+
+                        $price = $currency_symbol.number_format( $coin['current_price'], 2 );
+                        $market_cap = $currency_symbol.nice_number( $coin['market_cap'], 2 );
+                        $totalvol = $currency_symbol.nice_number( $coin['total_volume'], 2 );
+
+                      }else{
+
+                        $price = number_format( $coin['current_price'], 2 ).'<span > '.$currency_symbol.' </span>';
+                        $market_cap = nice_number( $coin['market_cap'], 2 ).'<span > '.$currency_symbol.' </span>';
+                        $totalvol = nice_number( $coin['total_volume'], 2 ).'<span > '.$currency_symbol.' </span>';
+                      }
 				
 			$output .=	"</a>";
 	    
 			$output .=	"</td>";
 			
-			$output .= "<td class='text-right' width='10%'>".$currency_symbol.number_format( $coin['current_price'], 2 )."</td>";
+			$output .= "<td class='text-right' width='10%'>".$price."</td>";
+
 			$output .= "<td class='text-right' width='10%' style='color:".$color."'>".round($coin['price_change_percentage_24h'],2)."%</td>";
-			$output .= "<td class='text-right' width='10%'>".$currency_symbol.nice_number($coin['market_cap'])."</td>";
-			$output .= "<td class='text-right' width='10%'>".$currency_symbol.nice_number($coin['total_volume'])."</td>";
+
+			$output .= "<td class='text-right' width='10%'>".$market_cap."</td>";
+
+			$output .= "<td class='text-right' width='10%'>".$totalvol."</td>";
+
 			$output .= "<td class='text-center' width='15%'>".nice_number($coin['circulating_supply'])."</td>";
+
 			$output .= "<td  width='15%'><image src='https://www.coingecko.com/coins/".$chart_array[$key]."/sparkline' style='width:100%; height: 100%;'/></td>";
 			$output .= "</tr>";
 			
@@ -389,9 +420,11 @@ register_activation_hook( __FILE__, 'table_for_setting' );
 	if($active_currency == "usd"){
 		$currency_symbol = '$';
 	}else if($active_currency == "nok"){
-        $currency_symbol = 'kr';
-	}else if($active_currency == "eur"){
-        $currency_symbol = '€';
+        $currency_symbol = 'NOK';
+	}else if($active_currency == "dkk"){
+        $currency_symbol = 'DKK';
+	}else if($active_currency == "sek"){
+        $currency_symbol = 'SEK';
 	}
 	include('new_graph.php');
 	
@@ -414,7 +447,7 @@ add_shortcode('generate-prices-graph', 'generate_graph');
 	if (!is_numeric($n)) return false;
 
 	// now filter it;
-	if ($n > 1000000000000) return round(($n/1000000000000), 1).'Tn';
+	if ($n > 1000000000000) return round(($n/1000000000000), 1).'T';
 	elseif ($n > 1000000000) return round(($n/1000000000), 1).'B';
 	elseif ($n > 1000000) return round(($n/1000000), 1).'M';
 	elseif ($n > 1000) return round(($n/1000), 1).'K';
