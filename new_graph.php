@@ -79,8 +79,8 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
             <ul class="range-buttons">
                 <li id="week">1W</li>
                 <li id="month">1M</li>
-                <li id="year">1Y</li>
-                <li id="all" class="active">All</li>
+                <li id="year" class="active">1Y</li>
+                <li id="all">All</li>
             <ul>
 
         </div>
@@ -349,7 +349,7 @@ function addCurrencySymbol(value) {
 window.onload = function () {
     chkweek = false;
     mnth = false;
-   generate_graph(1,0,false,true);
+   generate_graph(1,360,true);
 }
 //one week
 jQuery("#week").click(function(){
