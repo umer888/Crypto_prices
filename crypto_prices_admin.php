@@ -65,7 +65,8 @@
 		                                            <option value="">Select Currency</option>
 													<option value="usd" <?php if(!empty($settings[0]->active_currency) && $settings[0]->active_currency == "usd"){ echo "selected"; }?>>USD</option>
 													<option value="nok" <?php if(!empty($settings[0]->active_currency) && $settings[0]->active_currency == "nok"){ echo "selected"; }?>>NOK</option>
-													<option value="eur" <?php if(!empty($settings[0]->active_currency) && $settings[0]->active_currency == "eur"){ echo "selected"; }?>>EURO</option>
+													<option value="dkk" <?php if(!empty($settings[0]->active_currency) && $settings[0]->active_currency == "dkk"){ echo "selected"; }?>>DKK</option>
+													<option value="sek" <?php if(!empty($settings[0]->active_currency) && $settings[0]->active_currency == "sek"){ echo "selected"; }?>>SEK</option>
 													</select>
 		</p>
         <p><?php _e("Active Language: " ); ?><select name="language" style="margin-left: 170px!important;"> 

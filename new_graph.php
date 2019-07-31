@@ -4,7 +4,7 @@ $request = new WP_Http;
 $result = $request->request( $url );
 $json = $result['body'];
 $coin_status = json_decode($json, true);
-$current_price = $currency_symbol.$coin_status['market_data']['current_price'][$active_currency];
+$current_price = $coin_status['market_data']['current_price'][$active_currency];
 $one_hour_change = $coin_status['market_data']['price_change_percentage_1h_in_currency'][$active_currency];
 $one_day_change = $coin_status['market_data']['price_change_percentage_24h_in_currency'][$active_currency];
 $one_week_change = $coin_status['market_data']['price_change_percentage_7d_in_currency'][$active_currency];
@@ -18,8 +18,8 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
       <div class="crypto-thumb my-auto mr-3">
         <img src="<?php echo $coin_status['image']['small']; ?>" width="80%" style="margin-top: 34%;">
       </div>
-        <h2 class="coin-heading"><?php echo $coin_status['name']; ?> Price</h2>
-        <div class="abbr h4 text-muted" style="text-transform: uppercase; margin-left: 1%;">   ( <?php echo $coin_status['symbol']; ?> )</div>
+        <h2><?php echo $coin_status['name']; ?> Price</h2>
+        <div class="h4 text-muted" style="text-transform: uppercase; margin-left: 1%;">   ( <?php echo $coin_status['symbol']; ?> )</div>
     </div>
     
   </div>
@@ -30,7 +30,11 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
                  <div class="text-muted small" style="/* height: 25px; */"><?php echo $graph_headings[0]; ?></div>
                  <div>
                     <div class="my-auto h4 ">
-                        <span><?php echo $current_price; ?></span>
+                      <?php if($currency_symbol == "$"){
+                        echo "<span>".$currency_symbol.$current_price."</span>";
+                      }else{
+                        echo '<span>'.$current_price.'</span><span class="currencysymbol"> '.$currency_symbol.' </span>';;
+                      }?>
                     </div>
                   </div>
             </div>
@@ -62,7 +66,11 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
                  <div class="text-muted small" style="/* height: 25px; */"><?php echo $graph_headings[4]; ?></div>
                  <div>
                     <div class="my-auto h4 ">
-                        <span><?php echo $currency_symbol.nice_number($market_cap);?></span>
+                      <?php if($currency_symbol == "$"){
+                        echo "<span>".nice_number($market_cap).$currency_symbol."</span>";
+                      }else{
+                        echo '<span>'.nice_number($market_cap).'</span><span class="currencysymbol"> '.$currency_symbol.' </span>';;
+                      }?>
                     </div>
                   </div>
             </div>
@@ -70,7 +78,11 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
                  <div class="text-muted small" style="/* height: 25px; */"><?php echo $graph_headings[5]; ?></div>
                  <div>
                     <div class="my-auto h4 ">
-                        <span><?php echo $currency_symbol.nice_number($volume);?></span>
+                      <?php if($currency_symbol == "$"){
+                        echo "<span>".nice_number($volume).$currency_symbol."</span>";
+                      }else{
+                        echo '<span>'.nice_number($volume).'</span><span class="currencysymbol"> '.$currency_symbol.' </span>';;
+                      }?>
                     </div>
                   </div>
             </div>
@@ -79,8 +91,8 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
             <ul class="range-buttons">
                 <li id="week">1W</li>
                 <li id="month">1M</li>
-                <li id="year" class="active">1Y</li>
-                <li id="all">All</li>
+                <li id="year">1Y</li>
+                <li id="all" class="active">All</li>
             <ul>
 
         </div>
@@ -349,7 +361,7 @@ function addCurrencySymbol(value) {
 window.onload = function () {
     chkweek = false;
     mnth = false;
-   generate_graph(1,360,true);
+   generate_graph(1,0,false,true);
 }
 //one week
 jQuery("#week").click(function(){
