@@ -173,7 +173,7 @@ h1:not(.site-title):before, h2:before{
 
 #chartContainer{
     height: 380px !important;
-    width: 848px !important;
+    width: 100% !important;
     margin: 0 auto;
 }
 

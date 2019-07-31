@@ -31,7 +31,7 @@
 		margin-top: 8%;
 	}
 	.coinlinks{
-    margin-left: 17%;
+    margin-left: 14%;
 	}  
 	textarea{
 		margin-left: 7%;
