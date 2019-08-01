@@ -9,12 +9,12 @@
     width: 50%;
 }
 .top-headings{
-    font-family: "Gotham" !important;
+    font-family: "Gotham-Book" !important;
     margin-bottom: 0px !important;
     color: #333;
 }
 .small-headings{
-  font-family: "Gotham",Sans-serif;
+  font-family: "Gotham-Book",Sans-serif;
   font-size: 17px;
   font-weight: 500;
   font-style: normal;
@@ -35,7 +35,7 @@ table{
 }
 
 .upper-crypto-calculations{
-font-family: "Gotham"!important;
+font-family: "Gotham-Book"!important;
 }
 
 .list-hundred{
@@ -45,6 +45,7 @@ font-family: "Gotham"!important;
     background: #fff;
     border-collapse: collapse;
     font-size: 18px!important;
+    font-family: Gotham-Book!important;
     border-left: none !important;
     border-radius: 10px;
     box-shadow: 0px 10px 25px 7px rgba(49, 121, 255, 0.05);
@@ -161,18 +162,18 @@ h1:not(.site-title):before, h2:before{
 }
 
 .graph-outer{
-    width: 62%;
+    width: 66%;
     margin: 0 auto;
     padding-bottom: 2%;
     background-color: #fff;
     background-clip: border-box;
     /*border: 1px solid rgba(0,0,0,.125);*/
-    border-radius: .25rem;
+    border-radius: 15px;
     box-shadow: 0px 10px 25px 7px rgba(49, 121, 255, 0.05);
 }
 
 #chartContainer{
-    height: 380px !important;
+    height: 485px !important;
     width: 100% !important;
     margin: 0 auto;
 }
@@ -217,10 +218,11 @@ h1:not(.site-title):before, h2:before{
 }
 
 .upper-stats{
-    height: 100px;
+    height: 142px;
     text-align: center;
     padding: 1em 0 1em 0;
-    font-family: "Gotham"!important;
+    border-bottom: 1px solid #dee2e6a1 !important;
+    font-family: "Gotham-Book"!important;
 }
 
 .h4, h4 {
@@ -257,4 +259,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .d-flex h2{
     margin-bottom: 0px !important;
+}
+
+.graph-header{
+    font-size: 24px !important;
+    font-weight: 500 !important;
+    font-family: gotham !important;
+    line-height: 1.81 !important;
+    letter-spacing: 0.32px !important;
 }

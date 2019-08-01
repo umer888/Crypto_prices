@@ -27,7 +27,7 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
     <div class="graph-outer">
         <div class="range-outer upper-stats">
             <div class="crypto-block">
-                 <div class="text-muted small" style="/* height: 25px; */"><?php echo $graph_headings[0]; ?></div>
+                 <div class="text-muted graph-header" style="/* height: 25px; */"><?php echo $graph_headings[0]; ?></div>
                  <div>
                     <div class="my-auto h4 ">
                       <?php if($currency_symbol == "$"){
@@ -39,7 +39,7 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
                   </div>
             </div>
             <div class="crypto-block" style="padding-left">
-                 <div class="text-muted small"><?php echo $graph_headings[1]; ?></div>
+                 <div class="text-muted graph-header"><?php echo $graph_headings[1]; ?></div>
                  <div>
                     <div class="my-auto h4 " style="<?php if($one_hour_change > 0){ echo "color:#35bc9d;"; }else{ echo "color:#f17777;"; } ?>">
                         <span><?php echo round($one_hour_change,2)."%";?></span>
@@ -47,7 +47,7 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
                   </div>
             </div>
             <div class="crypto-block">
-                 <div class="text-muted small"><?php echo $graph_headings[2]; ?></div>
+                 <div class="text-muted graph-header"><?php echo $graph_headings[2]; ?></div>
                  <div>
                     <div class="my-auto h4 " style="<?php if($one_day_change > 0){ echo "color:#35bc9d;"; }else{ echo "color:#f17777;"; } ?>">
                         <span><?php echo round($one_day_change,2)."%";?></span>
@@ -55,7 +55,7 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
                   </div>
             </div>
             <div class="crypto-block">
-                 <div class="text-muted small" style="/* height: 25px; */"><?php echo $graph_headings[3]; ?></div>
+                 <div class="text-muted graph-header" style="/* height: 25px; */"><?php echo $graph_headings[3]; ?></div>
                  <div>
                     <div class="my-auto h4 "  style="<?php if($one_week_change > 0){ echo "color:#35bc9d;"; }else{ echo "color:#f17777;"; } ?>">
                         <span><?php echo round($one_week_change,2)."%";?></span>
@@ -63,23 +63,23 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
                   </div>
             </div>
             <div class="crypto-block">
-                 <div class="text-muted small" style="/* height: 25px; */"><?php echo $graph_headings[4]; ?></div>
+                 <div class="text-muted graph-header" style="/* height: 25px; */"><?php echo $graph_headings[4]; ?></div>
                  <div>
                     <div class="my-auto h4 ">
                       <?php if($currency_symbol == "$"){
                         echo "<span>".nice_number($market_cap).$currency_symbol."</span>";
                       }else{
-                        echo '<span>'.nice_number($market_cap).'</span><span class="currencysymbol"> '.$currency_symbol.' </span>';;
+                        echo '<span>'.$currency_symbol.nice_number($market_cap).'</span><span class="currencysymbol"> '.' </span>';;
                       }?>
                     </div>
                   </div>
             </div>
             <div class="crypto-block">
-                 <div class="text-muted small" style="/* height: 25px; */"><?php echo $graph_headings[5]; ?></div>
+                 <div class="text-muted graph-header" style="/* height: 25px; */"><?php echo $graph_headings[5]; ?></div>
                  <div>
                     <div class="my-auto h4 ">
                       <?php if($currency_symbol == "$"){
-                        echo "<span>".nice_number($volume).$currency_symbol."</span>";
+                        echo "<span>".$currency_symbol.nice_number($volume)."</span>";
                       }else{
                         echo '<span>'.nice_number($volume).'</span><span class="currencysymbol"> '.$currency_symbol.' </span>';;
                       }?>
@@ -110,7 +110,7 @@ jQuery(document).ready(function() {
 
 var chart;
 
-var generate_graph = function(till, from, year=false,  all=false) {
+var generate_graph = function(till, from, year=false,  all=false, num) {
         
     var coin = "<?php echo $coin;?>";
     var active_currency = "<?php echo $active_currency;?>";
@@ -195,8 +195,8 @@ var generate_graph = function(till, from, year=false,  all=false) {
     options: {
     	
       tooltips: {
-      	    titleFontSize: 18,
-    bodyFontSize: 18,
+      	    titleFontSize: 15,
+            bodyFontSize: 15,
             intersect: false,
             mode: 'index',
             displayColors: true,
@@ -285,7 +285,7 @@ var generate_graph = function(till, from, year=false,  all=false) {
                     maxRotation: 0,
                     autoSkipPadding: 110,
                     //autoSkip: true,
-                    //maxTicksLimit:4
+                    maxTicksLimit: num,
                     callback: function(tick) {
                       if(chkweek){
                         tick = '12AM';
@@ -318,7 +318,9 @@ var generate_graph = function(till, from, year=false,  all=false) {
             }],
 
           yAxes: [{
-            
+            gridLines: {
+                    display: false
+                },
             ticks: {
                     fontColor: '#111',
                     fontSize: 16,
@@ -360,13 +362,15 @@ function addCurrencySymbol(value) {
     
 }
 
-
+var num;
 
 //default graph
 window.onload = function () {
     chkweek = false;
     mnth = false;
-   generate_graph(1,360,true);
+    num =2;
+   generate_graph(1,360,true,false,num);
+   
 }
 //one week
 jQuery("#week").click(function(){
@@ -374,7 +378,9 @@ jQuery("#week").click(function(){
     chkweek = true;
     mnth = false;
     checker = false;
-    generate_graph(1,7);
+    num =7;
+    generate_graph(1,7,false,false,num);
+    
 }); 
 //one month
 jQuery("#month").click(function(){
@@ -382,22 +388,29 @@ jQuery("#month").click(function(){
     mnth = true;
     chkweek = false;
     checker = false;
-    generate_graph(1,30);
+    num =2;
+    generate_graph(1,30, false, false, num);
+    
 }); 
 //one year
 jQuery("#year").click(function(){
+
     chart.destroy();
     checker = true;
     mnth = false;
     chkweek = false;
-    generate_graph(1,360,true);
+    num =2;
+    generate_graph(1,360,true,false);
+    
 }); 
 
 jQuery("#all").click(function(){
     chart.destroy();
     chkweek = false;
     mnth = false;
-    generate_graph(1,0,false,true);
+    num = 2;
+    generate_graph(1, 0, false, true, num);
+    
 }); 
 
 
