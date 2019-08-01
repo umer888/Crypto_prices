@@ -67,9 +67,9 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
                  <div>
                     <div class="my-auto h4 ">
                       <?php if($currency_symbol == "$"){
-                        echo "<span>".nice_number($market_cap).$currency_symbol."</span>";
+                        echo "<span>".$currency_symbol.nice_number($market_cap)."</span>";
                       }else{
-                        echo '<span>'.$currency_symbol.nice_number($market_cap).'</span><span class="currencysymbol"> '.' </span>';;
+                        echo '<span>'.nice_number($market_cap).$currency_symbol.'</span><span class="currencysymbol"> '.' </span>';;
                       }?>
                     </div>
                   </div>
