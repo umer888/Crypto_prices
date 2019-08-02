@@ -1,3 +1,10 @@
+@font-face {
+font-family: 'Gotham Book';
+font-style: normal;
+font-weight: normal;
+src: local('Gotham Book'), url('GothamBook.woff') format('woff');
+}
+
 @media only screen  
   and (max-device-width: 768px) {
     .values{
@@ -9,12 +16,12 @@
     width: 50%;
 }
 .top-headings{
-    font-family: "Gotham-Book" !important;
+    font-family: "Gotham Book" !important;
     margin-bottom: 0px !important;
     color: #333;
 }
 .small-headings{
-  font-family: "Gotham-Book",Sans-serif;
+  font-family: "Gotham Book",Sans-serif;
   font-size: 17px;
   font-weight: 500;
   font-style: normal;
@@ -35,7 +42,7 @@ table{
 }
 
 .upper-crypto-calculations{
-font-family: "Gotham-Book"!important;
+font-family: "Gotham Book"!important;
 }
 
 .list-hundred{
@@ -45,7 +52,7 @@ font-family: "Gotham-Book"!important;
     background: #fff;
     border-collapse: collapse;
     font-size: 18px!important;
-    font-family: Gotham-Book!important;
+    font-family: Gotham Book!important;
     border-left: none !important;
     border-radius: 10px;
     box-shadow: 0px 10px 25px 7px rgba(49, 121, 255, 0.05);
@@ -55,7 +62,7 @@ font-family: "Gotham-Book"!important;
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6 !important;
     font-weight:600;
-    padding: 8px 0px !important;
+    padding: 30px 0px !important;
 }
 
 .list-hundred tbody tr td{
@@ -71,6 +78,7 @@ font-family: "Gotham-Book"!important;
     
     vertical-align: inherit !important;
     border-left: none;
+    line-height: 44px;
     border-bottom: none;
     border-right: none;
     padding: 0px !important;
@@ -180,7 +188,7 @@ h1:not(.site-title):before, h2:before{
 
 .range-outer{
     width: 93%;
-    margin: 0 auto;
+    margin: 8px auto;
 }
 
 .range-outer ul{
@@ -218,11 +226,11 @@ h1:not(.site-title):before, h2:before{
 }
 
 .upper-stats{
-    height: 142px;
+    height: 120px;
     text-align: center;
     padding: 1em 0 1em 0;
     border-bottom: 1px solid #dee2e6a1 !important;
-    font-family: "Gotham-Book"!important;
+    font-family: "Gotham Book"!important;
 }
 
 .h4, h4 {
@@ -262,9 +270,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .graph-header{
-    font-size: 24px !important;
+    font-size: 21px !important;
     font-weight: 500 !important;
-    font-family: gotham !important;
+    font-family: Gotham Book !important;
     line-height: 1.81 !important;
     letter-spacing: 0.32px !important;
 }

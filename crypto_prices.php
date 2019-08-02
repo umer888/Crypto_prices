@@ -284,7 +284,7 @@ register_activation_hook( __FILE__, 'table_for_setting' );
     $output .= "<div class='full-width-crypto upper-crypto-calculations' style='margin: 0 auto; max-width: 90% !important;'>";
 
 
-    $output .= 	'<div style="display: inline;"><div style="float:left"><h4 class="top-headings">'.$top.'</h4>
+    $output .= 	'<div style="display: inline;"><div style="float:left"><h4 class="top-headings" style="    font-weight: 700!important;">'.$top.'</h4>
     				<p class="small-headings">Updated '.humanTiming($time).' ago</p></div>
     				<div class="values">
     					<div style="float: left; width: 33%;">
