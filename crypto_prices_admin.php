@@ -142,8 +142,8 @@ jQuery(document).ready(function(){
 
 
     jQuery("#addButton").click(function () {
-			if(counter>10){
-					alert("Only 10 textboxes allow");
+			if(counter>100){
+					alert("Only 100 textboxes allow");
 					return false;
 			}   
 			var newTextBoxDiv = jQuery(document.createElement('div')).attr("id", 'TextBoxDiv' + counter);

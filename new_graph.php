@@ -1,3 +1,11 @@
+<style>
+.entry-content{
+    margin: 0px auto !important;
+    width: 100% !important;
+    padding:0px !important;
+    max-width: 100% !important;
+}
+</style>
 <?php
 $url = 'https://api.coingecko.com/api/v3/coins/'.$coin;
 $request = new WP_Http;
@@ -15,25 +23,26 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
   <div class="cryto-coin-title">
     
     <div class="d-flex flex-wrap align-items-baseline taitle">
-      <div class="crypto-thumb my-auto mr-3">
-        <img src="<?php echo $coin_status['image']['small']; ?>" width="80%" style="margin-top: 20%;">
+      <div class="crypto-thumb mr-3" style="height: 33px;">
+        <img src="<?php echo $coin_status['image']['small']; ?>" style="float: left;top: 9px;" width="85%" >
       </div>
-        <h2><?php echo $coin_status['name']; ?> Price</h2>
-        <h2 class="text-muted" style="text-transform: uppercase; margin-left: 1%;">   ( <?php echo $coin_status['symbol']; ?> )</h2>
+        <h1 style="font-size: 2.5em !important;"><?php echo $coin_status['name']." ".$graph_headings[0]; ?></h1>
+        <h2 class="text-muted" style="text-transform: uppercase; margin-left: 1%;font-size: 48px;">   (<?php echo $coin_status['symbol']; ?>)</h2>
     </div>
     
   </div>
 
-    <div class="graph-outer">
+    <div class="graph-outer" class="chart-container">
         <div class="range-outer upper-stats">
             <div class="crypto-block">
                  <div class="text-muted graph-header" style="/* height: 25px; */"><?php echo $graph_headings[0]; ?></div>
                  <div>
                     <div class="my-auto h4 ">
                       <?php if($currency_symbol == "$"){
-                        echo "<span>".$currency_symbol.$current_price."</span>";
+                        echo "<span>".$currency_symbol.number_format((int)$current_price,0)."</span>";
                       }else{
-                        echo '<span>'.$current_price.'</span><span class="currencysymbol"> '.$currency_symbol.' </span>';;
+                        
+                        echo '<span>'.number_format((int)$current_price, 0 ,","," ").'</span><span class="currencysymbol"> '.$currency_symbol.' </span>';
                       }?>
                     </div>
                   </div>
@@ -41,24 +50,26 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
             <div class="crypto-block" style="padding-left">
                  <div class="text-muted graph-header"><?php echo $graph_headings[1]; ?></div>
                  <div>
-                    <div class="my-auto h4 " style="<?php if($one_hour_change > 0){ echo "color:#35bc9d;"; }else{ echo "color:#f17777;"; } ?>">
-                        <span><?php echo round($one_hour_change,2)."%";?></span>
+                    <div class="my-auto h4 " style="<?php if((int)$one_hour_change > 0){ echo "color:#35ba9b;"; }else{ echo "color:#f17171;"; } ?>">
+                        <span><?php if((int)$one_hour_change > 1){ echo '+'.round((double)$one_hour_change)."%".'<img src="'.plugins_url().'/crypto_prices/images/up.png"/>';}else{ echo round((double)$one_hour_change,2)."%".'<img src="'.plugins_url().'/crypto_prices/images/down.png"/>';}?> </span>
                     </div>
                   </div>
             </div>
             <div class="crypto-block">
                  <div class="text-muted graph-header"><?php echo $graph_headings[2]; ?></div>
                  <div>
-                    <div class="my-auto h4 " style="<?php if($one_day_change > 0){ echo "color:#35bc9d;"; }else{ echo "color:#f17777;"; } ?>">
-                        <span><?php echo round($one_day_change,2)."%";?></span>
+                    <div class="my-auto h4 " style="<?php if((int)$one_day_change > 1){ echo "color:#35ba9b;"; }else{ echo "color:#f17171;"; } ?>">
+  
+                        <span><?php if((int)$one_day_change > 1){ echo '+'.round((double)$one_day_change,2)."%".'<img src="'.plugins_url().'/crypto_prices/images/up.png"/>';}else{ echo round((double)$one_day_change,2)."%".'<img src="'.plugins_url().'/crypto_prices/images/down.png"/>';}?> </span>
                     </div>
                   </div>
             </div>
             <div class="crypto-block">
                  <div class="text-muted graph-header" style="/* height: 25px; */"><?php echo $graph_headings[3]; ?></div>
                  <div>
-                    <div class="my-auto h4 "  style="<?php if($one_week_change > 0){ echo "color:#35bc9d;"; }else{ echo "color:#f17777;"; } ?>">
-                        <span><?php echo round($one_week_change,2)."%";?></span>
+                    <div class="my-auto h4 "  style="<?php if((int)$one_week_change > 0){ echo "color:#35ba9b;"; }else{ echo "color:#f17171;"; } ?>">
+          
+                        <span><?php if((int)$one_week_change > 1){ echo '+'.round((double)$one_week_change,2)."%".'<img src="'.plugins_url().'/crypto_prices/images/up.png"/>';}else{ echo round((double)$one_week_change,2)."%".'<img src="'.plugins_url().'/crypto_prices/images/down.png"/>';}?> </span>
                     </div>
                   </div>
             </div>
@@ -69,7 +80,7 @@ $volume = $coin_status['market_data']['total_volume'][$active_currency];
                       <?php if($currency_symbol == "$"){
                         echo "<span>".$currency_symbol.nice_number($market_cap)."</span>";
                       }else{
-                        echo '<span>'.nice_number($market_cap).$currency_symbol.'</span><span class="currencysymbol"> '.' </span>';;
+                        echo '<span>'.nice_number($market_cap).'</span><span class="currencysymbol"> '.$currency_symbol.' </span>';;
                       }?>
                     </div>
                   </div>
@@ -171,12 +182,13 @@ var generate_graph = function(till, from, year=false,  all=false, num) {
 
 
     var ctx = document.getElementById('chartContainer').getContext('2d');
-
+   
     chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'LineWithLine',
      
     // The data for our dataset
+    
     data: {
         labels: titles,
         datasets: [{
@@ -193,35 +205,47 @@ var generate_graph = function(till, from, year=false,  all=false, num) {
 
     // Configuration options go here
     options: {
-    	
+    	responsive: true,
+      maintainAspectRatio: true,
       tooltips: {
       	    titleFontSize: 15,
             bodyFontSize: 15,
             intersect: false,
             mode: 'index',
             displayColors: true,
+          /*  callbacks: {
+              label: function(tooltipItem, data) {
+                  return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+              },
+            },*/
 
             callbacks: {
                 label: function(tooltipItem, data) {
+                 
                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
-
+                    
                     if (label) {
                         label += ': ';
                     }
-                    label += Math.round(tooltipItem.yLabel * 100) / 100;
+                    var number_value = Math.round(tooltipItem.yLabel * 100) / 100;
+                    //console.log(label);
+                    label += number_value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    
                     return label;
                 },
 
                 title: function(tooltipItem){
+               
                 // `tooltipItem` is an object containing properties such as
                 // the dataset and the index of the current item
 
                 // Here, `this` is the char instance
 
                 // The following returns the full string
-
+            
                 if (mnth) {
                   var pieces = this._data.labels[tooltipItem[0].index].split(" ");
+                  //console.log(pieces);
                   switch(pieces[2]) {
                     case 'Jan':
                       pieces[2] = '01';
@@ -262,40 +286,94 @@ var generate_graph = function(till, from, year=false,  all=false, num) {
                     default:
                       // code block
                   }
-                  return pieces[2]+"/"+pieces[1]+"/"+pieces[3];
+                  return pieces[1]+"/"+pieces[2]+"/"+pieces[3];
                 }
                 if(checker){
+                  //console.log(this._data.labels[tooltipItem[0].index]);
+                  var datee = this._data.labels[tooltipItem[0].index];
+                  
+                  if(navigator.language == 'nb' || navigator.language == 'sv'){
+                    //console.log(this._data.labels[tooltipItem[0].index]);
+                    var true_date = (this._data.labels[tooltipItem[0].index]).split("/");
+                    console.log("This is tick "+ true_date);
+                    var broken =  true_date[1].split(".");
+                    return broken[0]+"/"+broken[1]+"/"+broken[2];
+                    //return true_date[1];
+                    
+                  }
+                  if(navigator.language == 'da'){
+                    var true_date = (this._data.labels[tooltipItem[0].index]).split("/");
+                    var fix_date;
+                    fix_date = true_date[1].split(" ");
+                    var broken =  fix_date[0].split(".");
+                    return broken[0]+"/"+broken[1]+"/"+broken[2];
+                  }
                   return this._data.labels[tooltipItem[0].index];
                 }
-                
-                console.log(this._data.labels[tooltipItem[0].index]);
                 }
             }
         },
         scales: {
-
 
           xAxes: [{
                 gridLines: {
                     display: false
                 },
                 ticks: {
-                    fontColor: '#111',
+                    fontColor: '#8194A5',
                     fontSize: 16,
                     maxRotation: 0,
                     autoSkipPadding: 110,
                     //autoSkip: true,
                     maxTicksLimit: num,
                     callback: function(tick) {
+                      //console.log(tick);
                       if(chkweek){
-                        tick = '12AM';
+                        tick = '12AM'; 
                         return tick;
                       }
                       if(checker){
                         var characterLimit = 4;
+                        
                         if (tick.length >= characterLimit) {
-                            tick = tick.substring(tick.length-5);
-                            tick = tick.replace(/\//g, '');
+                          
+                            //tick = tick.substring(tick.length-5);
+                            //tick = tick.replace(/\//g, '');
+                            if(navigator.language == 'da'){
+                              var brokend = tick.split("/");
+                              var extended = brokend[1].split(".");
+                              const months = ["Jan", "Feb", "Mar","Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec", "Jan"];
+                              tick = months[extended[1]]+" "+extended[2];
+                              console.log("This is tick "+ tick);
+                              return tick;
+                            }
+                            if(navigator.language == 'nb'){
+                              var brokend = tick.split("/");
+                              var extended = brokend[1].split(".");
+                              const months = ["Jan", "Feb", "Mar","Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des", "Jan"];
+                              tick = months[extended[1]]+" "+extended[2];
+                              
+                              return tick;
+                            }
+                            if(navigator.language == 'sv'){
+                              
+                              var brokend = tick.split("/");
+                              var extended = brokend[1].split("-");
+                              
+                              const months = ["Jan", "Feb", "Mar","Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec", "Jan"];
+                              tick = months[extended[1]]+" "+extended[2];
+                              
+                              if(tick == 'undefined 15'){
+                                console.log(extended[1]);
+                              }
+                              return tick;
+                            }
+                            var brokend = tick.split("/");
+                            //console.log(brokend);
+                            const months = ["Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"];
+                           //console.log(brokend[1]);
+                            tick = months[brokend[1]]+" "+brokend[2];
+                            //console.log(tick);
                             return tick;
                         }
                       }
@@ -308,7 +386,7 @@ var generate_graph = function(till, from, year=false,  all=false, num) {
                             return tick;
                         }
                       }
-                      
+                    
                     return tick;
                   }
                 }
@@ -322,7 +400,7 @@ var generate_graph = function(till, from, year=false,  all=false, num) {
                     display: false
                 },
             ticks: {
-                    fontColor: '#111',
+                    fontColor: '#8194A5',
                     fontSize: 16,
                     callback: function(value, index, values) {
                         return formatCurrencyAbbreviated(value);
@@ -345,7 +423,11 @@ var generate_graph = function(till, from, year=false,  all=false, num) {
 }
 
 
-
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2
+})
 
 
 function formatCurrencyAbbreviated(number) {
@@ -368,7 +450,7 @@ var num;
 window.onload = function () {
     chkweek = false;
     mnth = false;
-    num =2;
+    num =6;
    generate_graph(1,360,true,false,num);
    
 }
@@ -399,8 +481,8 @@ jQuery("#year").click(function(){
     checker = true;
     mnth = false;
     chkweek = false;
-    num =2;
-    generate_graph(1,360,true,false);
+    num =6;
+    generate_graph(1,360,true,false,num);
     
 }); 
 
@@ -422,6 +504,7 @@ var get_epoch_with_difference = function(date, duration) {
         var myEpoch = myDate.getTime()/1000.0;
         return myEpoch;
  }
+ 
 
 var checker = false;
 var mnth = false;
@@ -441,41 +524,43 @@ var chkweek = false;
                var prices =  response.prices;
 
                for(var i = 0; i< prices.length; i++){
-                
-                if(year || all){
-                    var date = new Date(prices[i][0]).toLocaleString();
-                    checker = true;
-                    mnth = false;
-                    date = date.substring(0, 10);
-                }else{
-                    checker = false;
-                    mnth = true;
-                    var date = new Date(prices[i][0]).toGMTString();
-                }
-                if (mnth) {
-                  var pieces = date.split(" ");
-                  if(date_checker != pieces[1]){
-                        var saving_date = date.replace(/\s/g, '');
-                        final_array[counter] = {label: date, y: prices[i][1]};
-                        date_checker = pieces[1];
-                        counter++;
+             
+                    if(year || all){
+                     
+                        var date = new Date(prices[i][0]).toLocaleString();
+                        checker = true;
+                        mnth = false;
+                        date = date.substring(0, 10);
+                        var break_date = date.split("/");
+                        date = break_date[1]+"/"+break_date[0]+"/"+break_date[2];
+                    }else{
+                        checker = false;
+                        mnth = true;
+                        var date = new Date(prices[i][0]).toGMTString();
                     }
-                }
-                if (checker) {
-                  if(date_checker != date){
-                        var saving_date = date.replace(/\s/g, '');
-                        date = date.replace(/,/g, '');
-                        final_array[counter] = {label: date, y: prices[i][1]};
-                        date_checker = date;
-                        counter++;
+                   
+                    if (mnth) {
+                      var pieces = date.split(" ");
+                      if(date_checker != pieces[1]){
+                            var saving_date = date.replace(/\s/g, '');
+                            final_array[counter] = {label: date, y: prices[i][1]};
+                            date_checker = pieces[1];
+                            counter++;
+                        }
                     }
-                }
-
-
-                    
+                    if (checker) {
+                      if(date_checker != date){
+                            var saving_date = date.replace(/\s/g, '');
+                            date = date.replace(/,/g, '');
+                            final_array[counter] = {label: date, y: prices[i][1]};
+                            date_checker = date;
+                            counter++;
+                        }
+                    } 
                 }
             }
         });
+     //console.log(final_array);
         return final_array;
   }
 

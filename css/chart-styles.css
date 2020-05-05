@@ -189,3 +189,37 @@ a:hover {
 	padding: 2px;
 	text-align: center;
 }
+
+
+/*------------------------------------*/
+.mainn {
+    overflow:auto; 
+}
+.roww {
+    box-shadow: none;
+   
+    clear:both;
+    width:250%;
+    position:relative;
+    box-sizing:border-box;
+}
+.contentt {
+    float:left;
+    width:150px;
+    border:1px solid black;
+}
+.stickyy {
+    
+  
+    border:1px solid black;
+}
+.stickyy {
+	/* position:absolute; left:0; top:0; */
+	z-index: 999;
+}
+.contentt {
+	box-shadow: none;
+}
+.stickyy table td{
+    width: 30px;;
+}

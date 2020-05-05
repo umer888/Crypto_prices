@@ -51,7 +51,7 @@ font-family: "Gotham Book"!important;
     margin: 0 auto;
     background: #fff;
     border-collapse: collapse;
-    font-size: 18px!important;
+    font-size: 16px!important;
     font-family: Gotham Book!important;
     border-left: none !important;
     border-radius: 10px;
@@ -71,6 +71,7 @@ font-family: "Gotham Book"!important;
 
 .list-hundred thead tr td{
     border-top: none !important;
+    text-transform: capitalize;
 }
 
 
@@ -81,7 +82,7 @@ font-family: "Gotham Book"!important;
     line-height: 44px;
     border-bottom: none;
     border-right: none;
-    padding: 0px !important;
+    padding: 10px !important;
     
 }
 
@@ -118,16 +119,16 @@ font-family: "Gotham Book"!important;
 .no-underline {
     text-decoration: none !important;
 }
-.entry-content{
+/*.entry-content{
     margin: 0px auto !important;
     width: 90% !important;
     padding:0px !important;
     max-width: 100% !important;
-}
+}*/
 
 .h0 {
     margin-bottom: 0!important;
-    font-size: 18px!important;
+    font-size: 17px!important;
     text-transform: uppercase!important;
 }
 
@@ -181,13 +182,14 @@ h1:not(.site-title):before, h2:before{
 }
 
 #chartContainer{
-    height: 485px !important;
-    width: 100% !important;
+    /* height: 485px !important; */
+    /* width: 100% !important; */
     margin: 0 auto;
+    padding-left: 1.5%;
 }
 
 .range-outer{
-    width: 93%;
+    width: 100%;
     margin: 8px auto;
 }
 
@@ -199,11 +201,17 @@ h1:not(.site-title):before, h2:before{
     margin-bottom: 0;
     list-style: none;
     justify-content: flex-end!important;
+    font-size: 16px;
+    padding-right: 2%;
 }
 
 .range-outer ul li{
     margin-left: 2%;
     cursor:pointer;
+}
+
+.range-outer ul li:hover{
+    text-decoration: underline;
 }
 
 .range-buttons > .active{
@@ -234,7 +242,7 @@ h1:not(.site-title):before, h2:before{
 }
 
 .h4, h4 {
-    font-size: 1.3rem;
+    font-size: 1rem;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -262,7 +270,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
    }
 
 .currencysymbol{
-    font-size: 48%;
+    font-size: 75%;
 }
 
 .d-flex h2{
@@ -270,9 +278,191 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .graph-header{
-    font-size: 21px !important;
+    font-size: 18px !important;
     font-weight: 500 !important;
     font-family: Gotham Book !important;
     line-height: 1.81 !important;
     letter-spacing: 0.32px !important;
+}
+
+.my-auto img{
+    width: 10%;
+    margin-left: 5%;
+}
+
+.chart-container{
+    position: relative; 
+    height:auto; 
+    width:auto; 
+    margin: auto;
+}
+
+/*------------------------------------*/
+.mainn {
+    overflow:auto; 
+    width: 100%;
+    background-color: #fff;
+}
+.roww {
+    box-shadow:none;
+    overflow:auto; 
+    clear:both;
+    width:250%;
+    position:relative;
+    box-sizing:border-box;
+}
+.tp-ten {
+    box-shadow:none;
+    overflow:auto; 
+    clear:both;
+    width:250%;
+    position:relative;
+    box-sizing:border-box;
+}
+.contentt {
+    float:left;
+    width:150px;
+    border:1px solid black;
+}
+/* .stickyy {
+    right: 160px;
+    position: fixed;
+    left: 0px !important;
+} */
+.stickyy {
+    /* float:left; */
+    border: 0px !important;
+    border-right: 1px solid #DEE2E6 !important;
+}
+/* .stickyy {
+    
+    position:absolute; left:0; top:0;
+} */
+.contentt {
+    background-color: inherit;
+    box-shadow: none;
+}
+
+.serial {
+    width: 45px !important;
+}
+
+.stickyy table tr .ml-2{
+    margin-left: 2px !important;
+}
+
+.contentt table td{
+    width: 10%;
+}
+
+.contentt tr .ml-2{
+    margin-left: 0px !important;
+}
+.list-hundred td {
+    line-height: 18px;
+    /*width: 1%;*/
+}
+.mainn{
+    display: none;
+}
+.desktop{
+    display: block;
+}
+.roww{
+    width: 100% !important;
+}
+
+@media only screen 
+and (min-device-width : 1025px) 
+and (max-device-width : 2560px)  { /* STYLES GO HERE */
+    .list-hundred td {
+        width: 1%;
+    }
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)  { /* STYLES GO HERE */
+    .roww{
+        width: 124% !important;
+    }
+    .tp-ten{
+        width: 100%;
+    }
+}
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 767px)  { /* STYLES GO HERE */
+    .roww{
+        width: 282% !important;
+    }
+    .tp-ten{
+        width: 166%;
+    }
+    .taitle .crypto-thumb{
+        width: 13%;
+    }
+    .taitle h2{
+        font-size: 150%;
+    }
+    .taitle .text-muted{
+        font-size: 120% !important;
+    }
+}
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 768px)  { /* STYLES GO HERE */
+    .main-title{
+        width: 100%;
+        text-align: center;
+    }
+    .main-title p.small-headings{
+        text-align: center;
+    }
+}
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 1024px)  { /* STYLES GO HERE */
+    .mainn{
+        display: block;
+    }
+    .desktop{
+        display: none;
+    }
+    .crypto-block{
+        width: 49%;
+    }
+    .graph-outer{
+        width: 86%;
+    }
+    .cryto-coin-title{
+        width: 86% !important;
+    }
+    .upper-stats{
+        display: inline-block;
+        height: auto;
+        text-align: left;
+        padding-left: 10px;
+        width: 100%;
+    }
+    .upper-stats .crypto-block{
+        margin-bottom: 20px;
+    }
+    .crypto-block .my-auto{
+        font-size: 100%;
+    }
+    .my-auto img {
+        width: 5%;
+        margin-left: 2%;
+    }
+}
+
+
+.numbered thead tr td{
+    padding-right: 4% !important;
+}
+
+.numbered tbody tr td{
+    padding-right: 4% !important;
 }
